@@ -364,7 +364,7 @@ thread_yield (void)
   struct thread *cur = thread_current ();
   enum intr_level old_level;
   
-  ASSERT (!intr_context ());
+  //ASSERT (!intr_context ());
 
   old_level = intr_disable ();
   if (cur != idle_thread) 
@@ -379,14 +379,14 @@ thread_yield (void)
 void
 thread_foreach (thread_action_func *func, void *aux)
 {
-  struct list_elem *e;
+  struct list_elem *l_e;
 
   ASSERT (intr_get_level () == INTR_OFF);
 
-  for (e = list_begin (&all_list); e != list_end (&all_list);
-       e = list_next (e))
+  for (l_e = list_begin (&all_list); l_e != list_end (&all_list);
+       l_e = list_next (l_e))
     {
-      struct thread *t = list_entry (e, struct thread, allelem);
+      struct thread *t = list_entry (l_e, struct thread, allelem);
       func (t, aux);
     }
 }
